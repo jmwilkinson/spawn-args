@@ -33,6 +33,17 @@ describe('spawn-args', function(){
     arr.length.should.equal(4);
   })
 
+  it('should parsed quoted kv pair as a single value', function() {
+    var string = '--host "hello.com" --fruit=\'apples "oranges"\''
+    var keepquotes = parse(string)
+    var removequotes = parse(string, {
+      removequotes:true
+    })
+
+    keepquotes[1].should.equal('"hello.com"')
+    keepquotes[2].should.equal('--fruit=\'apples "oranges"\'')
+  })
+
   it('should remove quotes if passed a config', function() {
     var string = '--host "hello.com" --fruit "apples oranges"'
     var keepquotes = parse(string)
@@ -58,4 +69,5 @@ describe('spawn-args', function(){
     removequotes[3].should.equal('apples oranges')
 
   })
+
 })

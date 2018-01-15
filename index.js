@@ -36,6 +36,10 @@ module.exports = function(args, opts){
 				if (quoteType === c) {
 					// make sure the quote is not escaped
 					if (quoted.charAt(quoted.length - 2) !== '\\') {
+						if(current) {
+							quoted = current + quoted;
+							current = null;
+						}
 						arr.push(quoted);
 						quoted = null;
 						quoteType = null;
@@ -43,7 +47,6 @@ module.exports = function(args, opts){
 				}
 			}
 			else{
-				addcurrent();
 				quoted = c;
 				quoteType = c;
 			}
